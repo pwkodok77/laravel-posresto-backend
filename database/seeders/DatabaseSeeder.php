@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\CategorySeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +22,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'sandi@fic14.com',
             'password' => Hash::make('123456'),
             'roles' => 'admin',
+        ]);
+
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }
