@@ -33,7 +33,7 @@ class CategoryController extends Controller
         $category = new Category;
         $category->name =$request->name;
         $category->description = $request->description;
-
+        $category->save();
 
         // save image
         if($request->hasFile('image')){
@@ -63,20 +63,21 @@ class CategoryController extends Controller
     // validate the request..
     $request->validate([
         'name'=>'required',
-        'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // 'image'=>'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
     // update the request..
     $category = Category::find($id);
     $category->name = $request->name;
     $category->description = $request->description;
+    $category->save();
 
     // save image
     if($request->hasFile('image')) {
         $image = $request->file('image');
-        $image->storeAs('public/categories', $categoriex->id .'.'. $image->getClientOriginalExtesion());
-        $product->image = 'storage/categories/' . $product->id . '.' . $image->getClientOriginalExtension();
-        $product->save();
+        $image->storeAs('public/categories', $category->id .'.'. $image->getClientOriginalExtesion());
+        $category->image = 'storage/categories/' . $category->id . '.' . $image->getClientOriginalExtension();
+        $category->save();
     }
     return redirect()->route('categories.index')->with('success', 'Product update successfully');
     }
